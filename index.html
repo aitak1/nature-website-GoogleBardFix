@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature Connects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f5f3;
+        }
+
+        .header {
+            background-color: #90EE90;
+            padding: 1rem 2rem;
+            border-radius: 0 0 1rem 1rem;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            margin-right: 1rem;
+        }
+
+        .search-btn {
+            border: none;
+            background-color: #90EE90;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .search-btn svg {
+            fill: #fff;
+            width: 1rem;
+            height: 1rem;
+            padding: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: #333;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .nav-link.active {
+            background-color: #ddd;
+        }
+
+        .nav-link:hover {
+            background-color: #eee;
+        }
+
+        .main {
+            padding: 2rem;
+        }
+
+        .explore,
+        .community,
+        .post-form {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .explore.hidden,
+        .community.hidden,
+        .post-form.hidden {
+            display: none;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background-color: #eee;
+        }
+
+        .explore-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .explore-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .explore-list li:hover {
+            background-color: #eee;
+        }
+
+        .explore-list li img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
+
+.explore-list li div {
+    flex: 1;
+    margin-left: 1rem;
+}
+
+.explore-list li p {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+    max-height: 3.6rem; /* Adjust height to fit 2 lines of text */
+    overflow: hidden; /* Hide text that overflows */
+    text-overflow: ellipsis; /* Add ellipsis (...) for overflowing text */
+}
+
+.community .post-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.community .post {
+    width: calc(33% - 1rem); /* Adjust width for 3 columns */
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.community .post img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.community .post .like-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.community .post .like-btn svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: #ccc;
+}
+
+.community .post .like-btn.liked svg {
+    fill: red;
+}
+
+.community .post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.community .post-form label {
+    font-weight: bold;
+}
+
+.community .post-form input[type="file"] {
+    display: none;
+}
+
+.community .post-form button {
+    background-color: #90EE90;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+/* Additional styles for navigation */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: transparent;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.nav-link.active::after {
+    background-color: #90EE90;
+}
+</style>
+</head>
+<body>
+<header class="header">
+<nav class="nav">
+    <a href="#" class="nav-title">Nature Connects</a>
+    <div class="search-container">
+        <label for="search-bar">Search Flora & Fauna</label>
+        <input type="text" id="search-bar" class="search-bar" placeholder="Search Flora & Fauna">
+        <button class="search-btn" title="Search for plants and animals">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l-1.477-1.478a.298.298 0 0 1 .424-.424l.94 1.08a8.5 8.5 0 1 1-1.255 1.255zM14.5 6.5a1.75 1.75 0 0 1-2.5                 0l-5 5a1.75 1.75 0 0 1-2.5-2.5l5-5A1.75 1.75 0 0 1 14.5 6.5z"/>
+            </svg>
+        </button>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#" class="nav-link active" data-section="community">Community</a></li>
+        <li><a href="#" class="nav-link" data-section="explore">Explore</a></li>
+    </ul>
+</nav>
+</header>
+<main class="main">
+<section class="explore">
+    <h2>Explore Nature</h2>
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="plants">Plants</button>
+        <button class="filter-btn" data-filter="animals">Animals</button>
+    </div>
+    <ul class="explore-list"></ul>
+</section>
+<section class="community hidden">
+    <h2>Community Posts</h2>
+    <button class="add-post-btn">Add Post</button>
+    <div class="post-container"></div>
+</section>
+<div class="post-form hidden">
+    <h2>Create a Post</h2>
+    <form action="#">
+        <label for="post-image">Image</label>
+        <input type="file" id="post-image" name="post-image" accept="image/*">
+        <label for="post-description">Description</label>
+        <textarea name="post-description" id="post-description" cols="30" rows="10"></textarea>
+        <button type="submit" class="submit-btn">Submit Post</button>
+    </form>
+</div>
+</main>
+
+<script>
+const exploreList = document.querySelector('.explore-list');
+
+// Example plant data
+const plants = [
+    { name: "Sunflower", image: "images/sunflower.jpg" },
+    { name: "Oak Tree", image: "images/oak-tree.jpg" },
+    { name: "Venus Flytrap", image: "images/venus-flytrap.jpg" },
+];
+
+// Example animal data
+const animals = [
+    { name: "Lion", image: "images/lion.jpg" },
+    { name: "Butterfly", image: "images/butterfly.jpg" },
+    { name: "Dolphin", image: "images/dolphin.jpg" },
+];
+
+// Function to display explore list items
+function displayExploreList(data) {
+    exploreList.innerHTML = ""; // Clear previous list items
+    data.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+            <img src="<span class="math-inline">\{item\.image\}" alt="Sunflower flower">
+            <div>
+                <p>${item.name}</p>
+            </div>
+        `;
+        exploreList.appendChild(listItem);
+    });
+}
+
+// Initial display (show all plants)
+displayExploreList(plants);
+
+// Navigation link click event listener
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default anchor tag behavior
+
+        const section = document.querySelector(`.${this.dataset.section}`);
+        const activeLink = document.querySelector('.nav-link.active');
+
+        // Toggle active class for links and visibility of sections
+        activeLink.classList.remove('active');
+        this.classList.add('active');
+        document.querySelector('.explore').classList.add('hidden');
+        document.querySelector('.community').classList.add('hidden');
+        section.classList.remove('hidden');
+    });
+});
+
+// Filter button click event listener (replace with actual filtering logic)
+const filterBtns = document.querySelectorAll('.filter-btn');
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        const filter = this.dataset.filter; // Get the filter type (all, plants, animals)
+                let filteredData;
+
+                // Logic to filter data based on the selected filter (replace with your implementation)
+                if (filter === "all") {
+                    filteredData = plants.concat(animals); // Combine all data
+                } else if (filter === "plants") {
+                    filteredData = plants; // Show only plants
+                } else if (filter === "animals") {
+                    filteredData = animals; // Show only animals
+                }
+
+                // Update explore list with filtered data
+                displayExploreList(filteredData);
+
+                // Remove active class from previously active filter button
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                this.classList.add('active'); // Add active class to clicked button
+            });
+        });
+    </script>
+</body>
+</html>
